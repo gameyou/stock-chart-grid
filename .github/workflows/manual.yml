@@ -1,32 +1,22 @@
 name: update-data
-
 on:
-workflow_dispatch:
-
+  workflow_dispatch:
 permissions:
-contents: write
-
+  contents: write
 jobs:
-build:
-runs-on: ubuntu-latest
-
-
-steps:
-  - uses: actions/checkout@v4
-
-  - uses: actions/setup-python@v5
-    with:
-      python-version: '3.11'
-
-  - run: pip install -r requirements.txt
-
-  - run: python fetch.py
-
-  - name: commit
-    run: |
-      git config user.name github-actions
-      git config user.email github-actions@github.com
-      git add data.json
-      git commit -m "update data" || echo "no changes"
-      git push
-
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install -r requirements.txt
+      - run: python fetch.py
+      - name: commit
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add data.json
+          git commit -m "update data" || echo "no changes"
+          git push
